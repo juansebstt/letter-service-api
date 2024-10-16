@@ -15,6 +15,6 @@ public class CreatePackageRequest {
     private Integer weight;
 
     @Email
-    private String ReceiverEmail;
+    private String receiverEmail;
 
 }
