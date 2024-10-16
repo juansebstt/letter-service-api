@@ -1,8 +1,7 @@
 package com.letterserviceapi.common.entities;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -21,17 +20,37 @@ public class PackageModel {
     private Long trackingNumber;
 
     // Package dimensions
+    @NotNull(message = "Sender name is required")
+    @NotBlank(message = "Sender name cannot be blank")
     private String senderName;
-    @Email
+
+    @Email(message = "Sender email should be valid")
     private String senderEmail;
+
+    @NotNull(message = "Sender address is required")
+    @NotBlank(message = "Sender address cannot be blank")
     private String senderAddress;
+
+    @NotNull(message = "Sender phone is required")
+    @NotBlank(message = "Sender phone cannot be blank")
+    @Pattern(regexp = "^[+]?[0-9]{1,15}$", message = "Invalid phone number format")
     private String senderPhone;
 
     // Recipient information
+    @NotNull(message = "Recipient name is required")
+    @NotBlank(message = "Recipient name cannot be blank")
     private String recipientName;
-    @Email
+
+    @Email(message = "Recipient email should be valid")
     private String recipientEmail;
+
+    @NotNull(message = "Recipient address is required")
+    @NotBlank(message = "Recipient address cannot be blank")
     private String recipientAddress;
+
+    @NotNull(message = "Recipient phone is required")
+    @NotBlank(message = "Recipient phone cannot be blank")
+    @Pattern(regexp = "^[+]?[0-9]{1,15}$", message = "Invalid phone number format")
     private String recipientPhoneNumber;
 
     @Min(15)
