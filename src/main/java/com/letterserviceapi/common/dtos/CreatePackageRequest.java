@@ -4,8 +4,6 @@ import jakarta.validation.constraints.Email;
 import lombok.*;
 
 @Data
-@Getter
-@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,5 +16,5 @@ public class CreatePackageRequest {
 
     @Email
     private String ReceiverEmail;
-    
+
 }
