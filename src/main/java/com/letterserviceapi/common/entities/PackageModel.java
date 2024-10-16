@@ -20,12 +20,14 @@ public class PackageModel {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long trackingNumber;
 
+    // Package dimensions
     private String senderName;
     @Email
     private String senderEmail;
     private String senderAddress;
     private String senderPhone;
 
+    // Recipient information
     private String recipientName;
     @Email
     private String recipientEmail;
