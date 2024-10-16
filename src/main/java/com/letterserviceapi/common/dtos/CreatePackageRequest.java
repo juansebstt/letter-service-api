@@ -9,7 +9,11 @@ import lombok.*;
 @NoArgsConstructor
 public class CreatePackageRequest {
 
-    private Long trackingNumber;
+    private String recipientName;
+
+    @Email
+    private String receiverEmail;
+
     private String address;
     private String content;
     private Integer weight;
