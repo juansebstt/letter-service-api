@@ -53,16 +53,18 @@ public class PackageModel {
     @Pattern(regexp = "^[+]?[0-9]{1,15}$", message = "Invalid phone number format")
     private String recipientPhoneNumber;
 
-    @Min(15)
-    private float width;
+    //Package Dimensions
+    @Min(value = 15, message = "Width must be at least 15 cm")
+    private Float width;
 
-    @Min(15)
-    private float height;
+    @Min(value = 15, message = "Height must be at least 15 cm")
+    private Float height;
 
-    @Min(15)
-    private float length;
+    @Min(value = 15, message = "Length must be at least 15 cm")
+    private Float length;
 
-    private float weight;
+    @Min(value = 0, message = "Weight must be a positive value")
+    private Float weight;
 
     private LocalDateTime createdAt;
 
