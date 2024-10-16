@@ -1,4 +1,4 @@
-package com.letterserviceapi.common.dtos;
+package com.letterserviceapi.common.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
