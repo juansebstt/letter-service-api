@@ -77,6 +77,30 @@ public class LetterServiceImpl implements LetterService {
     @Override
     public LetterContentResponse getLetterContent(Long trackingNumber) {
 
+        return Optional.of(trackingNumber)
+                .map(this::getLetterByTrackingNumber)
+                .map(this::mapToLetterContent)
+                .orElseThrow(() -> new RuntimeException("Error letter not found by id"));
+
+    }
+
+    private LetterContentResponse mapToLetterContent(LetterModel letterModel) {
+
+        return LetterContentResponse.builder()
+                .recipientName(letterModel.getRecipientName())
+                .recipientAddress(letterModel.getRecipientAddress())
+                .recipientEmail(letterModel.getRecipientEmail())
+                .letterSubject(letterModel.getLetterSubject())
+                .letterWeight(letterModel.getLetterWeight())
+                .build();
+
+    }
+
+    private LetterModel getLetterByTrackingNumber(Long trackingNumber) {
+
+        return this.letterRepository.findByTrackingNumber(trackingNumber)
+                .orElseThrow(() -> new RuntimeException("Error finding letter by trackingNumber"));
+
     }
 
     @Override
