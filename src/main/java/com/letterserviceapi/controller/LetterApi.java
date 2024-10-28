@@ -26,6 +26,6 @@ public interface LetterApi {
             @PathVariable Long trackingNumber
     );
 
-    @DeleteMapping(value = "/delete_package/{trackingNumber}")
-    ResponseEntity<Void> deletePackage(@PathVariable Long trackingNumber);
+    @DeleteMapping(value = "/delete_letter/{trackingNumber}")
+    ResponseEntity<Void> deleteLetter(@PathVariable Long trackingNumber);
 }
