@@ -5,6 +5,7 @@ import com.letterserviceapi.common.dtos.CreateLetterRequest;
 import com.letterserviceapi.common.dtos.CreateLetterResponse;
 import com.letterserviceapi.common.dtos.LetterContentResponse;
 import com.letterserviceapi.common.dtos.UpdateLetterRequest;
+import com.letterserviceapi.common.entities.LetterModel;
 import com.letterserviceapi.repositories.LetterRepository;
 import com.letterserviceapi.service.LetterService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +22,14 @@ public class LetterServiceImpl implements LetterService {
 
     @Autowired
     public LetterServiceImpl(LetterRepository letterRepository, StreamBridge streamBridge) {
+
         this.letterRepository = letterRepository;
         this.streamBridge = streamBridge;
     }
 
     @Override
     public CreateLetterResponse createLetter(CreateLetterRequest createLetterRequest, Long userId) {
+
         return Optional.of(createLetterRequest)
                 .map(this::mapToEntity)
                 .map(letterRepository::save)
@@ -36,6 +39,7 @@ public class LetterServiceImpl implements LetterService {
     }
 
     private CreateLetterResponse sendLetterEvent(CreateLetterResponse createLetterResponse) {
+
         Optional.of(createLetterResponse)
                 .map(givenLetter -> this.streamBridge.send(TopicConstants.LETTER_CREATED_TOPIC, createLetterResponse))
                 .map(bool -> createLetterResponse);
@@ -43,10 +47,31 @@ public class LetterServiceImpl implements LetterService {
         return createLetterResponse;
     }
 
-    private Object buildCreateLetterResponse(Object object) {
+    private CreateLetterResponse buildCreateLetterResponse(LetterModel savedLetter) {
+
+        return CreateLetterResponse.builder()
+                .trackingNumber(savedLetter.getTrackingNumber())
+                .recipientEmail(savedLetter.getRecipientEmail())
+                .build();
     }
 
-    private Object mapToEntity(CreateLetterRequest createLetterRequest) {
+    private LetterModel mapToEntity(CreateLetterRequest createLetterRequest) {
+
+        return LetterModel.builder()
+                .senderName(createLetterRequest.getSenderName())
+                .senderAddress(createLetterRequest.getSenderAddress())
+                .senderEmail(createLetterRequest.getSenderEmail())
+                .senderPhoneNumber(createLetterRequest.getSenderPhoneNumber())
+                .recipientName(createLetterRequest.getRecipientName())
+                .recipientAddress(createLetterRequest.getRecipientAddress())
+                .recipientEmail(createLetterRequest.getRecipientEmail())
+                .recipientPhoneNumber(createLetterRequest.getRecipientPhoneNumber())
+                .letterBody(createLetterRequest.getLetterBody())
+                .letterWidth(createLetterRequest.getLetterWidth())
+                .letterHeight(createLetterRequest.getLetterHeight())
+                .letterWeight(createLetterRequest.getLetterWeight())
+                .build();
+
     }
 
     @Override

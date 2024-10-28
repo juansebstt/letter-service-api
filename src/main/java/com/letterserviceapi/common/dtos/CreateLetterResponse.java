@@ -12,5 +12,5 @@ import lombok.NoArgsConstructor;
 public class CreateLetterResponse {
 
     private Long trackingNumber;
-
+    private String recipientEmail;
 }
