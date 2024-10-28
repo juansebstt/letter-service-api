@@ -105,7 +105,21 @@ public class LetterServiceImpl implements LetterService {
 
     @Override
     public void updateLetter(UpdateLetterRequest updateLetterRequest, Long trackingNumber) {
+        Optional.of(trackingNumber)
+                .map(this::getLetterByTrackingNumber)
+                .map(existingLetter -> updateLetterFields(existingLetter, updateLetterRequest))
+                .map(letterRepository::save)
+                .orElseThrow(() -> new RuntimeException("Error updating letter"));
+    }
 
+    private LetterModel updateLetterFields(LetterModel existingLetter, UpdateLetterRequest updateLetterRequest) {
+
+        return LetterModel.builder()
+                .recipientName(updateLetterRequest.getRecipientName())
+                .recipientAddress(updateLetterRequest.getRecipientAddress())
+                .recipientPhoneNumber(updateLetterRequest.getRecipientPhoneNumber())
+                .recipientEmail(existingLetter.getRecipientEmail())
+                .build();
     }
 
     @Override
