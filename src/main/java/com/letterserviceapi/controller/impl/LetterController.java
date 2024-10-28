@@ -1,7 +1,42 @@
 package com.letterserviceapi.controller.impl;
 
+import com.letterserviceapi.common.dtos.CreateLetterRequest;
+import com.letterserviceapi.common.dtos.CreateLetterResponse;
+import com.letterserviceapi.common.dtos.LetterContentResponse;
+import com.letterserviceapi.common.dtos.UpdateLetterRequest;
+import com.letterserviceapi.controller.LetterApi;
+import com.letterserviceapi.service.LetterService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class LetterController {
+public class LetterController implements LetterApi {
+
+    private final LetterService letterService;
+
+    @Autowired
+    public LetterController(LetterService letterService) {
+        this.letterService = letterService;
+    }
+
+    @Override
+    public ResponseEntity<CreateLetterResponse> createLetter(CreateLetterRequest createLetterRequest, Long userId) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<LetterContentResponse> getLetterInformation(Long trackingNumber) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<Void> updateLetter(UpdateLetterRequest updateLetterRequest, Long trackingNumber) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<Void> deletePackage(Long trackingNumber) {
+        return null;
+    }
 }
