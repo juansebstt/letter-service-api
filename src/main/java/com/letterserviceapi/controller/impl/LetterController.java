@@ -39,7 +39,9 @@ public class LetterController implements LetterApi {
     }
 
     @Override
-    public ResponseEntity<Void> deletePackage(Long trackingNumber) {
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<Void> deleteLetter(Long trackingNumber) {
+        return ResponseEntity
+                .noContent()
+                .build();
     }
 }
