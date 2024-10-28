@@ -22,21 +22,24 @@ public class LetterController implements LetterApi {
 
     @Override
     public ResponseEntity<CreateLetterResponse> createLetter(CreateLetterRequest createLetterRequest, Long userId) {
-        return null;
+        return ResponseEntity.ok(letterService.createLetter(createLetterRequest, userId));
     }
 
     @Override
     public ResponseEntity<LetterContentResponse> getLetterInformation(Long trackingNumber) {
-        return null;
+        return ResponseEntity.ok(letterService.getLetterContent(trackingNumber));
     }
 
     @Override
     public ResponseEntity<Void> updateLetter(UpdateLetterRequest updateLetterRequest, Long trackingNumber) {
-        return null;
+        letterService.updateLetter(updateLetterRequest, trackingNumber);
+        return ResponseEntity
+                .noContent()
+                .build();
     }
 
     @Override
     public ResponseEntity<Void> deletePackage(Long trackingNumber) {
-        return null;
+        return ResponseEntity.noContent().build();
     }
 }
