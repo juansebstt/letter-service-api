@@ -67,11 +67,22 @@ public class LetterModel {
     @Schema(description = "Receives the weight of a letter which must be positive")
     private Float letterWeight;
 
+    @NotNull(message = "Letter subject is required")
+    @NotBlank(message = "Letter subject cannot be blank")
+    @Schema(description = "Receives the letter subject")
+    private String letterSubject;
+
+    @NotNull(message = "Letter body is required")
+    @NotBlank(message = "Letter body cannot be blank")
+    @Schema(description = "Receives the letter body")
+    private String letterBody;
+
     @Schema(description = "Creates a letter at the local current time")
     private LocalDateTime createdAt;
 
     @PrePersist
     protected void onCreate() {
+
         createdAt = LocalDateTime.now();
     }
 
