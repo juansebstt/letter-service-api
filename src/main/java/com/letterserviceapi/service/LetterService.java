@@ -1,4 +1,4 @@
 package com.letterserviceapi.service;
 
-public class LetterService {
+public interface LetterService {
 }
