@@ -125,5 +125,9 @@ public class LetterServiceImpl implements LetterService {
     @Override
     public void deleteLetter(Long trackingNumber) {
 
+        Optional.of(trackingNumber)
+                .map(this::getLetterByTrackingNumber)
+                .ifPresent(letterRepository::delete);
+
     }
 }
