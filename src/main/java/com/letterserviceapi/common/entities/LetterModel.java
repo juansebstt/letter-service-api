@@ -39,6 +39,11 @@ public class LetterModel {
     @Schema(description = "Full name of the letter sender")
     private String senderPhoneNumber;
 
+    @NotNull(message = "Sender address is required")
+    @NotBlank(message = "Sender address cannot be blank")
+    @Schema(description = "Address of the letter sender")
+    private String senderAddress;
+
     @NotNull(message = "Recipient phone is required")
     @NotBlank(message = "Recipient phone cannot be blank")
     @Schema(description = "Full name of the letter recipient")
@@ -55,6 +60,11 @@ public class LetterModel {
     @Schema(description = "Full name of the letter recipient")
     private String recipientPhoneNumber;
 
+    @NotNull(message = "Recipient address is required")
+    @NotBlank(message = "Recipient address cannot be blank")
+    @Schema(description = "Address of the letter recipient")
+    private String recipientAddress;
+
     @Min(value = 10, message = "Width must be at least 10 cm")
     @Schema(description = "Receives the width of a letter")
     private Float letterWidth;
@@ -67,11 +77,22 @@ public class LetterModel {
     @Schema(description = "Receives the weight of a letter which must be positive")
     private Float letterWeight;
 
+    @NotNull(message = "Letter subject is required")
+    @NotBlank(message = "Letter subject cannot be blank")
+    @Schema(description = "Receives the letter subject")
+    private String letterSubject;
+
+    @NotNull(message = "Letter body is required")
+    @NotBlank(message = "Letter body cannot be blank")
+    @Schema(description = "Receives the letter body")
+    private String letterBody;
+
     @Schema(description = "Creates a letter at the local current time")
     private LocalDateTime createdAt;
 
     @PrePersist
     protected void onCreate() {
+
         createdAt = LocalDateTime.now();
     }
 
