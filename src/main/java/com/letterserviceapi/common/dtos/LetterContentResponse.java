@@ -22,7 +22,7 @@ public class LetterContentResponse {
     private String recipientEmail;
 
     @Schema(description = "Receives the letter content as a parameter")
-    private String letterContent;
+    private String letterSubject;
 
     @Schema(description = "Receives the letter weight name as a parameter")
     private Float letterWeight;
