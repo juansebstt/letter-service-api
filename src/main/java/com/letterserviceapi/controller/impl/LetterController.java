@@ -40,6 +40,7 @@ public class LetterController implements LetterApi {
 
     @Override
     public ResponseEntity<Void> deleteLetter(Long trackingNumber) {
+        letterService.deleteLetter(trackingNumber);
         return ResponseEntity
                 .noContent()
                 .build();

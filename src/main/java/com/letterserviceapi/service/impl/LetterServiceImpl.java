@@ -1,22 +1,57 @@
 package com.letterserviceapi.service.impl;
 
+import com.letterserviceapi.common.constants.TopicConstants;
 import com.letterserviceapi.common.dtos.CreateLetterRequest;
 import com.letterserviceapi.common.dtos.CreateLetterResponse;
 import com.letterserviceapi.common.dtos.LetterContentResponse;
 import com.letterserviceapi.common.dtos.UpdateLetterRequest;
+import com.letterserviceapi.repositories.LetterRepository;
 import com.letterserviceapi.service.LetterService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class LetterServiceImpl implements LetterService {
+
+    private final LetterRepository letterRepository;
+    private final StreamBridge streamBridge;
+
+    @Autowired
+    public LetterServiceImpl(LetterRepository letterRepository, StreamBridge streamBridge) {
+        this.letterRepository = letterRepository;
+        this.streamBridge = streamBridge;
+    }
+
     @Override
     public CreateLetterResponse createLetter(CreateLetterRequest createLetterRequest, Long userId) {
-        return null;
+        return Optional.of(createLetterRequest)
+                .map(this::mapToEntity)
+                .map(letterRepository::save)
+                .map(this::buildCreateLetterResponse)
+                .map(this::sendLetterEvent)
+                .orElseThrow(() -> new RuntimeException("Error creating a letter"));
+    }
+
+    private CreateLetterResponse sendLetterEvent(CreateLetterResponse createLetterResponse) {
+        Optional.of(createLetterResponse)
+                .map(givenLetter -> this.streamBridge.send(TopicConstants.LETTER_CREATED_TOPIC, createLetterResponse))
+                .map(bool -> createLetterResponse);
+
+        return createLetterResponse;
+    }
+
+    private Object buildCreateLetterResponse(Object object) {
+    }
+
+    private Object mapToEntity(CreateLetterRequest createLetterRequest) {
     }
 
     @Override
     public LetterContentResponse getLetterContent(Long trackingNumber) {
-        return null;
+
     }
 
     @Override
